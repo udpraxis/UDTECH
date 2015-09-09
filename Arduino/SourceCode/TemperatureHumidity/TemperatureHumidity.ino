@@ -36,15 +36,11 @@ void loop()
   float hic = dht.computeHeatIndex(t,h,false);
 
 
-  Serial.print("Humidity: ");
-  Serial.print(h);
-  Serial.print("%\t");
-  Serial.print("Temperature: ");
-  Serial.print(t);
-  Serial.print("*c\t");
-  Serial.print("Heat Index: ");
-  Serial.print(hic);
-  Serial.println("*c");
+  Serial.print(h);                //Humiditylevel
+  Serial.print(",");              
+  Serial.print(t);                //Temperature
+  Serial.print(",");      
+  Serial.print(hic);              //HeatIndex
   
 
 }
