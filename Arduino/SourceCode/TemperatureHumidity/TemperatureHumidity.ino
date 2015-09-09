@@ -40,7 +40,7 @@ void loop()
   Serial.print(",");              
   Serial.print(t);                //Temperature
   Serial.print(",");      
-  Serial.print(hic);              //HeatIndex
+  Serial.println(hic);              //HeatIndex
   
 
 }
