@@ -37,9 +37,9 @@ void loop()
 
 
   Serial.print(h);                //Humiditylevel
-  Serial.print(",");              
+  Serial.print(',');              
   Serial.print(t);                //Temperature
-  Serial.print(",");      
+  Serial.print(',');      
   Serial.println(hic);              //HeatIndex
   
 
