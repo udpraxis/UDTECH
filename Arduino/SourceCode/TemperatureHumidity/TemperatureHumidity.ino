@@ -14,6 +14,11 @@ DHT dht(DHTPIN,DHTTYPE);
 
 void setup() 
 {
+/*China Made Arduino, LED13 always HIGH*/
+/**/  pinMode(13,OUTPUT);            /**/
+/**/  digitalWrite(13,LOW);          /**/
+/***************************************/
+  
   Serial.begin(9600);
   dht.begin();
   
@@ -21,8 +26,6 @@ void setup()
 
 void loop() 
 {
-  delay(2000);
-
   float h = dht.readHumidity();
   float t = dht.readTemperature();
 
@@ -37,10 +40,10 @@ void loop()
 
 
   Serial.print(h);                //Humiditylevel
-  Serial.print(',');              
+  Serial.print(",");              
   Serial.print(t);                //Temperature
-  Serial.print(',');      
+  Serial.print(",");      
   Serial.println(hic);              //HeatIndex
-  
+  delay(250);
 
 }
