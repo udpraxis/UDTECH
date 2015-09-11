@@ -6,6 +6,9 @@ import numpy
 import matplotlib.pyplot as plt
 from drawnow import *
 import time
+import sys
+import csv
+
 
 #Object creation
 temp_array = []
@@ -43,13 +46,25 @@ while True :
         pass
 
     #Read the line from arduino and change into string
-    arduinoString = str(ardunioData.readline().decode('utf-8'))
-    data = arduinoString.split(',')
+    try:
+        arduinoString = str(ardunioData.readline().decode('utf-8'))
+        data = arduinoString.split(',')
+    except:
+        print("DataError!")
 
     #String to float conversion
-    single_humidity = float(data[0])
-    single_temperature = float(data[1])
-    heatIndex = float(data[2])
+    try:
+         single_humidity = float(data[0])
+    except:
+        print("DataError in Humidity")
+    try:
+        single_temperature = float(data[1])
+    except:
+        print("DataError in Temperature")
+    try:
+        heatIndex = float(data[2])
+    except:
+        print("DataError in HeatIndex")
 
     #Store float data into array
     temp_array.append(single_temperature)
@@ -59,14 +74,22 @@ while True :
     #Call Drawnow to update the live graph
     drawnow(makeFig)
     plt.pause(0.0001)
-    cont = cont +1
-    min10_Count = min10_Count +1
 
-    if (min10_Count >= 10):
+    with open("Data/Excels/Data.csv", "a")as log:
+            logWriter = csv.writer(log)
+            logWriter.writerow([single_temperature, single_humidity, heatIndex])
+
+
+    min10_Count = min10_Count + 1
+
+    if (min10_Count >= 600):
         datalog_count = datalog_count + 1
-        plt.savefig('DataLOG/10 Mins Datas (%d).pdf' % datalog_count)
+        plt.savefig('Data/Graphs/10MinsDatas(%d).pdf' % datalog_count)
+
         min10_Count = 0
         temp_array.clear()
+
+    log.close()
 
 
 
