@@ -1,0 +1,7 @@
+#Future Updates 
+
+- Data saved with the date and time 
+- produce new csv for each day*(can reduce the computing power when doing the total graphs
+- capable of producing monthly graphs based on mean of each day
+- graphs is also saved according to date and time
+- hour,day and monthly graph are plotted in the background and saved automatically
