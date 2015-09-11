@@ -44,6 +44,6 @@ void loop()
   Serial.print(t);                //Temperature
   Serial.print(",");      
   Serial.println(hic);              //HeatIndex
-  delay(1000);                     //delay 1 second
+  delay(250);
 
 }
