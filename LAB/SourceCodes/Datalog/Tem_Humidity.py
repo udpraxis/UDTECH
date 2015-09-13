@@ -5,7 +5,7 @@ import serial
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import setp
 from drawnow import *
-#import time
+import time
 #import sys
 import csv
 
@@ -101,9 +101,9 @@ while True:
     drawnow(makeFig)
     plt.pause(0.0001)
 
-    with open("Data/Excels/Data.csv", "a")as log:
+    with open("Data/Excel/Data.csv", "a")as log:
         logWriter = csv.writer(log)
-        logWriter.writerow([single_temperature, single_humidity, heatIndex])
+        logWriter.writerow([single_temperature, single_humidity, heatIndex, time.asctime()])
 
     min10_Count += 1
 
