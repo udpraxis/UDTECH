@@ -7,6 +7,7 @@ import sys
 #create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+
 #Bind the socker to the part
 ser_address = ("192.168.1.19", 10000)
 print( sys.stderr, 'starting up on %s port %s' % ser_address)
