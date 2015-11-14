@@ -100,7 +100,7 @@ void withoutCMMotion(int acceleration , int sterr ) {
 void CMMotion(float xaxes, float yaxes, float zaxes) {
   Serial.println("This is CMMotion funtion");
 
-  int X_axes = (int)(325-(-xaxes * 255));
+  int X_axes = (int)(325 - (-xaxes * 255));
   int Y_axes = (int)(yaxes * 100);// converted to display value as in 1- 100
   int Z_axes = (int)(zaxes * 225);
 
@@ -114,10 +114,10 @@ void CMMotion(float xaxes, float yaxes, float zaxes) {
   Serial.println("This is the value of the Z_axes :");
   Serial.print(Z_axes);
   Serial.println();
-  
 
-  // this funtion will be personal. change this funtion to what u want and get the output as require.. I call this the real deal starts now 
-  remotecontrol(X_axes,Y_axes);
+
+  // this funtion will be personal. change this funtion to what u want and get the output as require.. I call this the real deal starts now
+  remotecontrol(X_axes, Y_axes);
 }
 
 
@@ -132,49 +132,49 @@ void CMMotion(float xaxes, float yaxes, float zaxes) {
 
 
 // didnt use sterring as variable because it is used as define the pin in arduino = 5
-void remotecontrol(int tilt , int leftright){
-   int acceleration;
-   int sterr;
-  /* this funtion is the main brain to control the output for the remote control. 
+void remotecontrol(int tilt , int leftright) {
+  int acceleration;
+  int sterr;
+  /* this funtion is the main brain to control the output for the remote control.
    *  this funtion correspond to the given graph. so after all the success in reading the data from the ipad and sending to the server
-   *  now is the time for arduino use the data effectively and giving the command to the controller to move the car to the direction which i wants 
-   *  Ranges 
+   *  now is the time for arduino use the data effectively and giving the command to the controller to move the car to the direction which i wants
+   *  Ranges
    *    if 0- 91 then send the value of around 144 till 172
    *    if 92 - 144 then it is ok.
    *    if value is 172 till 225 then it is ok.
    */
 
-//setting the tilt only for acceleration
-   //this is for the range if unkn
-   if(tilt < 91){
-      acceleration =  159;
-   }else if ( tilt <= 144 & tilt >= 92 || tilt <= 230 & tilt >= 173){ // this is for the range of A and B
-      acceleration = tilt;
-   }else if (tilt <= 172 & tilt >= 145){//setting optimised breaking 2.5V
-     acceleration = 159;
-   }else {
+  //setting the tilt only for acceleration
+  //this is for the range if unkn
+  if (tilt < 91) {
+    acceleration =  159;
+  } else if ( tilt <= 144 & tilt >= 92 || tilt <= 230 & tilt >= 173) { // this is for the range of A and B
+    acceleration = tilt;
+  } else if (tilt <= 172 & tilt >= 145) { //setting optimised breaking 2.5V
+    acceleration = 159;
+  } else {
     acceleration = 240;
-   }
+  }
 
-   //Setting the LeftRight condition 
-   /* so for the left condition is performed as the 91 till 144 of the  as the representation from the ipad is 0.03 till 0.56 each 0.01 increment in ipad data is minus 1 in the variable of the leftright variable
-    *  
-    */
+  //Setting the LeftRight condition
+  /* so for the left condition is performed as the 91 till 144 of the  as the representation from the ipad is 0.03 till 0.56 each 0.01 increment in ipad data is minus 1 in the variable of the leftright variable
+   *
+   */
 
-    if ( leftright >= 3 & leftright <= 56){
-      sterr = 144 -( leftright - 3);
-    }else if (leftright <= -3 & leftright >= -56){
-      sterr = 172 -( leftright + 3);// hv to correct the algebra
-    }else if ( leftright > 56){
-      sterr = 91;
-    }else if (leftright <-56){
-      sterr = 255; // change this and fine a better formular
-    }else{
-      sterr = 170;
-    }
+  if ( leftright >= 3 & leftright <= 56) {
+    sterr = 144 - ( leftright - 3);
+  } else if (leftright <= -3 & leftright >= -56) {
+    sterr = 172 - ( leftright + 3); // hv to correct the algebra
+  } else if ( leftright > 56) {
+    sterr = 91;
+  } else if (leftright < -56) {
+    sterr = 255; // change this and fine a better formular
+  } else {
+    sterr = 170;
+  }
 
-  analogWrite(accelerator,acceleration);
-  analogWrite(sterring,sterr);
-  
+  analogWrite(accelerator, acceleration);
+  analogWrite(sterring, sterr);
+
 }
 
