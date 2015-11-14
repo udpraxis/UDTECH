@@ -18,7 +18,7 @@ cont = 0
 min10_Count = 0
 datalog_count = 0
 
-ardunioData = serial.Serial('/dev/ttyACM0', 9600)
+ardunioData = serial.Serial('/dev/ttyUSB0', 9600)
 
 # interactive mode = true by this code
 plt.ion()
