@@ -29,7 +29,7 @@ void setup() {
 }
 
 void loop() {
-
+/*setting the parameters for the data recieve from the server */
   if (Serial.available() > 0)
   {
     Serial.readBytesUntil(10, characters, 23);
@@ -78,7 +78,10 @@ void loop() {
       int_data3 = S3.toInt();
 
       withoutCMMotion(int_data1, int_data2);
-
+      /*Erase all the data for new data incoming 
+       * if this is not done there might be error in the data 
+       * saved in the array blocks 
+       */
       memset(data1, 0, sizeof(data1));
       memset(data2, 0, sizeof(data2));
       memset(data3, 0, sizeof(data3));
