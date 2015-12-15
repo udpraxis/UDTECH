@@ -1,3 +1,8 @@
+
+
+#!/usr/bin/env python3
+
+#Above code enable the executing command for linux
 __author__ = 'udlab'
 
 from twisted.internet.protocol import Factory, Protocol
@@ -14,9 +19,12 @@ device_configured = bool
 configure_now = True
 
 #used to choose the port number in configure session
-port_string = ""
+port_string = "testing"
+
+
 
 #This function ensure the ease of change the port without entering into the code level. Increase User Friendly
+#Function return the value of port destination in string form
 def inputConfigure():
 
         try:
@@ -33,41 +41,36 @@ def inputConfigure():
             if port_input == '1':
                 print("What is the Port number?")
                 port_input = input()
-                port_string = '/dev/ttyACM'+port_input
-                if debugmode:
-                    print(port_string)
-                    print(type(port_string))
+                port_string = '/dev/ttyACM'+str(port_input)
+                return port_string
+
             elif port_input == '2':
                 print("What is the Port number?")
                 port_input = input()
-                port_string = '/dev/cu.usbmodem'+port_input
-                if debugmode:
-                    print(port_string)
+                port_string = '/dev/cu.usbmodem'+str(port_input)
+                return port_string
             elif port_input == '3':
                 print("What is the Port number?")
                 port_input = input()
-                port_string = '/dev/ttyUSB'+port_input
-                if debugmode:
-                    print(port_string)
+                port_string = '/dev/ttyUSB'+str(port_input)
+                return  port_string
             elif port_input == '4':
                 print("What is the Port number?")
                 port_input = input()
-                port_string = '/dev/ttyS'+port_input
-                if debugmode:
-                    print(port_string)
+                port_string = '/dev/ttyS'+str(port_input)
+                return port_string
             elif port_input == '5':
                 print("Please insert your custom Serial Port destination")
                 port_input = input()
                 port_string = port_input
-                if debugmode:
-                    print(port_string)
+                return port_string
         except:
             print("There is error in the code section inputConfigure")
             if debugmode:
                     print(port_string)
 
 
-
+#The Main Program loop starts here
 while loop:
     print("Hello Darwin Welcome back    ")
     print("please initialize certian parameters before running the server")
@@ -97,14 +100,18 @@ print()
 while configure_now:
     #Configure server and arduino starts now
     print("Connecting Device in serial port...")
-    inputConfigure()
+
+    #The Port is determined here
+    arduino_port = inputConfigure()
 
     try:
         # Initializing the arduino Connection in mac change /dev/cu.usbmodem1441 to apprioprate '/dev/cu.usbmodem1431'
         #device_connected = serial.Serial('/dev/cu.usbmodem1411', 9600, timeout=1) #timeout is important action
-        device_connected = serial.Serial(port_string, 9600,timeout=1)
+        device_connected = serial.Serial(arduino_port, 9600, timeout=1)
         time.sleep(2)
         print("Arduino initialization Complete")
+        print("The arduino is connected in port =" + arduino_port)
+
         device_configured = True
         configure_now = False
         print()
