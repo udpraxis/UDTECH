@@ -1,12 +1,10 @@
-
-
 #!/usr/bin/env python3
 
 #Above code enable the executing command for linux
 __author__ = 'udlab'
 
 from twisted.internet.protocol import Factory, Protocol
-from twisted.internet import reactor
+from twisted.internet import reactor, address
 import serial
 import time
 
@@ -20,6 +18,7 @@ configure_now = True
 
 #used to choose the port number in configure session
 port_string = "testing"
+#data1 = ''
 
 
 
@@ -140,13 +139,6 @@ while configure_now:
 print()
 
 
-
-
-
-
-
-
-
 # Server Side
 class Server(Protocol):
     def connectionMade(self):
@@ -161,12 +153,19 @@ class Server(Protocol):
     def dataReceived(self, data):
        print(data)
        if device_configured :
-           device_connected.write(data)
-       time.sleep(0.4)
+           print(len(data))
+           if len(data) <= 20:
+            device_connected.write(data)
+            data1 = data
+           elif len(data):
+               print("Data too long")
+       time.sleep(0.5)
 
 
     def message(self, message):
         self.transport.write(message)
+
+
 
 
 
