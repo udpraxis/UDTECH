@@ -1,4 +1,4 @@
-/****All the pin naming***/
+/**********All the pin naming*******************/
 #define forward_pedal 3
 #define backward_pedal 5
 #define right_pedal 6
@@ -156,7 +156,6 @@ void conditionManager(String command, String speed, String turnlimit) {
       }
       brake();
       backward(-int_speed);
-      wasForward = false;
 
     } else if (wasForward == false && int_speed > 0) {//was in backward so brake first and then move forward.
       if (debug_mode) {
@@ -166,7 +165,7 @@ void conditionManager(String command, String speed, String turnlimit) {
       }
       brake();
       forward(int_speed);
-      wasForward = true;
+      
     } else if (wasForward == true && int_speed > 0) {//Continue to move forward.
       if (debug_mode) {
         Serial.println("");
@@ -238,9 +237,18 @@ void conditionManager(String command, String speed, String turnlimit) {
 
 
 void forward(int speed) {
+  /*     What is happening here 
+   * 1st : check if the previous speed and the current speed is not the same.execute if it is not same 
+   * 2nd : generated the pwm
+   * 3rd : make the active mode to be active
+   * 4th : now the forward motion is true
+   * 5th : now the previous speed is replaced with current speed.
+   * 6th : delay for 0.5 second to let the hardward  to catch up
+   */
   if (speed != speed_p) {
     analogWrite(forward_pedal, speed + 50);
     activemode = true;
+    wasForward = true;
     speed_p = speed;
     delay(500);
 
@@ -270,11 +278,21 @@ void brake() {
 }
 
 void backward(int speed) {
-  if (speed != speed_p) {
-    analogWrite(backward_pedal, speed);
-    activemode = true;
-    speed_p = speed;
-    delay(500);
+  /* What is done here.
+   *  1st : it will check if the previous speed is same with the current one. if it is the same then the command is skipped (whats the point executing the same think if it is the current state .. whalla!!!!)
+   *  2nd : now if there was different speed of then it will the command to the pwm analogWrite
+   *  3rd : now the activemode is one so the braking can take part
+   *  4th : update the previous speed to the current speed.
+   *  5th : now the condition check if wasForward is made to be false
+   *  6th : now delay for 0.5 second  to let the hardware to catch up.
+   */
+
+  /*1st*/if (speed != speed_p) {
+    /*2nd*/analogWrite(backward_pedal, speed);
+    /*3rd*/activemode = true;
+    /*4th*/speed_p = speed;
+    /*5th*/wasForward = false;
+    /*6th*/delay(500);
   }
 }
 
