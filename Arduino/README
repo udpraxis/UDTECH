@@ -1,2 +1,7 @@
 In this folder all my planning, research and sourcecode for the arduino will be found here
 
+
+What is the folders here in this part is created for 
+1.UDRemote_Arduino - the main arduino code to manage all the data recieved from the server TCP to be analysied and executing is all done here.
+2.Libraries - used to store all the arduino library 
+
