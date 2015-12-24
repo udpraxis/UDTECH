@@ -258,14 +258,19 @@ void forward(int speed) {
 void brake() {
   if (activemode) {
     if (wasForward == true) {
+      //When braking when the car was in in forward motion it require to set the forward pedal = 0 and backward pedal to be = max(255).
+      // method is added in 24 dec 2015
       analogWrite(forward_pedal, 0);
+      analogWrite(backward_pedal, 255);
       activemode = false;
       brakingdone = false;
       wasForward = false;
       delay(2000);
+      analogWrite(backward_pedal,0);
       brakingdone = true;
       delay(100);
     } else {
+      //In braking when the car in backward it only require to set the backward_pedal = 0
       analogWrite(backward_pedal, 0);
       activemode = false;
       brakingdone = false;
